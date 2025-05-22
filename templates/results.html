@@ -1,0 +1,66 @@
+{% extends "layout.html" %} {# Eredita dal layout base #}
+
+{% block title %}Risultati TSP - {{ region|title }}{% endblock %} {# Titolo dinamico #}
+
+{% block content %}
+<div class="card">
+    <h2>Risultato del TSP per la {{ region|title }}</h2>
+    {# Riepilogo dei risultati del calcolo TSP #}
+    <div class="form-group">
+        <strong>Città di partenza:</strong> {{ start_city }}
+    </div>
+    <div class="form-group">
+        <strong>Numero di città visitate:</strong> {{ city_count }}
+    </div>
+    <div class="form-group">
+        <strong>Distanza totale percorsa:</strong> {{ "%.2f"|format(total_distance) }} km {# Distanza formattata a 2 decimali #}
+    </div>
+    <div class="form-group">
+        <strong>Tempo di esecuzione:</strong> {{ execution_time }}
+    </div>
+    
+    <div class="form-group">
+        <strong>Percorso ottimale:</strong>
+        <p>{{ path_with_names | join(" → ") }}</p> {# Visualizza il percorso come sequenza di nomi #}
+    </div>
+    
+    <div class="result-map">
+        <h3>Visualizzazione del percorso</h3>
+        {# Contenitore per la mappa interattiva (es. Folium) #}
+        <div id="map_container" style="height: 500px; width: 100%;">
+             {{ map_html | safe }} {# Inserisce l'HTML della mappa, marcato come sicuro #}
+        </div>
+    </div>
+    
+    <div class="form-group">
+        {# Pulsanti per azioni successive #}
+        <a href="{{ url_for('download_results', session_id=session_id) }}" class="btn">Scarica risultato</a>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Nuova ricerca</a>
+    </div>
+</div>
+
+<div class="card">
+    <h2>Dettagli del percorso</h2>
+    {# Tabella con i dettagli di ogni tratta del percorso #}
+    <table class="result-table">
+        <thead>
+            <tr>
+                <th>#</th> {# Numero progressivo tratta #}
+                <th>Da</th> {# Città di partenza della tratta #}
+                <th>A</th> {# Città di arrivo della tratta #}
+                <th>Distanza (km)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i, (from_city, to_city, distance) in enumerate(path_details, 1) %} {# Cicla sui dettagli del percorso, partendo da 1 #}
+            <tr>
+                <td>{{ i }}</td>
+                <td>{{ from_city }}</td>
+                <td>{{ to_city }}</td>
+                <td>{{ "%.2f"|format(distance) }}</td> {# Distanza tratta formattata #}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

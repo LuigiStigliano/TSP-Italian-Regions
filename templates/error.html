@@ -1,0 +1,26 @@
+{% extends "layout.html" %} {# Eredita dal layout base #}
+
+{% block title %}Errore - Risolutore TSP Regioni Italiane{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>Si è verificato un errore</h2>
+    
+    {# Mostra il messaggio di errore specifico passato dal backend #}
+    <div class="alert alert-error">
+        <p>{{ error_message }}</p>
+    </div>
+    
+    <p>Possibili cause:</p>
+    <ul>
+        <li>Problemi di connessione all'API OpenStreetMap</li>
+        <li>La regione selezionata non è valida o non contiene città con i criteri specificati</li>
+        <li>Il file di cache dei dati è corrotto o inaccessibile</li>
+        <li>Errore interno nell'algoritmo di risoluzione TSP</li>
+        <li>Sessione scaduta o ID sessione non valido</li>
+    </ul>
+    {# Elenco di cause comuni per aiutare l'utente #}
+    
+    <a href="{{ url_for('index') }}" class="btn">Torna alla pagina principale</a> {# Testo già in italiano #}
+</div>
+{% endblock %}

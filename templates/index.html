@@ -1,0 +1,62 @@
+{% extends "layout.html" %} {# Eredita dal layout base #}
+
+{% block title %}Risolutore TSP Regioni Italiane - Home{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>Seleziona la Regione</h2>
+    <p>Seleziona una regione italiana e i parametri di ricerca per iniziare a risolvere il TSP.</p>
+    
+    {# Form per selezionare la regione e i parametri iniziali #}
+    <form action="{{ url_for('fetch_cities') }}" method="post">
+        <div class="form-group">
+            <label for="region">Regione:</label>
+            <select id="region" name="region" required>
+                {# Cicla sulle regioni disponibili passate dal backend #}
+                {% for code, name in regions.items() %}
+                <option value="{{ code }}">{{ name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="min_population">Popolazione minima:</label>
+            <input type="number" id="min_population" name="min_population" min="0" value="1000">
+            <small>Filtra le città con popolazione maggiore o uguale a questo valore.</small> {# Testo già in italiano #}
+        </div>
+        
+        <div class="form-group">
+            <label for="refresh_data">
+                <input type="checkbox" id="refresh_data" name="refresh_data">
+                Aggiorna i dati da OpenStreetMap
+            </label>
+            <small>Seleziona questa opzione per ottenere i dati più recenti (più lento).</small> {# Testo già in italiano #}
+        </div>
+        
+        <button type="submit">Continua</button> {# Testo già in italiano #}
+    </form>
+</div>
+
+<div class="card">
+    <h2>Informazioni sul Progetto</h2>
+    <p>Questo strumento risolve il <strong>Problema del Commesso Viaggiatore (TSP)</strong> per le città delle regioni italiane.</p>
+    
+    <h3>Come funziona:</h3>
+    <ol>
+        <li>Seleziona una regione italiana</li>
+        <li>Seleziona la città di partenza</li>
+        <li>L'algoritmo calcolerà il percorso più breve che visita tutte le città una volta sola</li>
+        <li>Visualizza il percorso ottimale su una mappa</li>
+    </ol>
+    
+    <h3>Algoritmo utilizzato:</h3>
+    <p>Il solver utilizza una combinazione di:</p>
+    <ul>
+        <li><strong>Nearest Neighbor</strong> per costruire una soluzione iniziale</li>
+        <li><strong>Iterated Local Search (ILS)</strong> per ottimizzare il percorso</li>
+    </ul>
+    
+    <p>I dati delle città vengono recuperati da OpenStreetMap e memorizzati localmente per un accesso più rapido.</p>
+    {# Tutto il testo informativo è già in italiano #}
+</div>
+{% endblock %}
