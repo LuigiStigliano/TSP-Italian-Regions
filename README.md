@@ -142,7 +142,7 @@ Migliora iterativamente il percorso:
 
 ---
 
-## Classe TSPSolver (API)
+## Classe TSPSolver
 
 ```python
 # Esempio
@@ -175,20 +175,3 @@ Il percorso può essere visualizzato su una mappa salvata in `.png`. I dati geog
 - Rispettiamo i [termini d'uso](https://operations.osmfoundation.org/policies/nominatim/), incluso:
   - User-Agent obbligatorio
   - Limite 1 richiesta/sec
-
----
-
-## Performance
-
-- Fino a **centinaia di città**
-- Soluzioni **di buona qualità** in pochi secondi
-- Scalabile per uso didattico o prototipale
-- Interfaccia web adattiva per dispositivi mobili
-
----
-
-## Limitazioni
-
-- Non garantisce la soluzione ottimale
-- Dipende dalla qualità dei dati OSM
-- La qualità dipende anche dalla città iniziale
